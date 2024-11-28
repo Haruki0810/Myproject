@@ -1,1 +1,32 @@
-test
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>掲示板</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>掲示板</h1>
+
+        <!-- 投稿一覧 -->
+        <div id="posts">
+            <?php foreach ($posts as $post): ?>
+                <div class="post">
+                    <p class="username"><?php echo htmlspecialchars($post['username']); ?></p>
+                    <p class="content"><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
+                    <p class="date"><?php echo $post['created_at']; ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- 投稿フォーム -->
+        <form method="post" action="post.php">
+            <input type="text" name="username" placeholder="名前" required>
+            <textarea name="content" rows="5" placeholder="内容を入力してください" required></textarea>
+            <button type="submit">投稿</button>
+        </form>
+    </div>
+</body>
+</html>
