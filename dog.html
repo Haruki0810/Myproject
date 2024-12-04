@@ -3,30 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>掲示板</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>犬の掲示板</title>
+    <!-- 指定されたCSSファイルをリンク -->
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+    <header>
+        <h1>犬の掲示板</h1>
+    </header>
     <div class="container">
-        <h1>掲示板</h1>
+        <form id="postForm" method="post" action="post.php">
+            <!-- タイトル入力 -->
+            <div class="form-group">
+                <label for="title">タイトル</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+
+            <!-- 犬種入力 -->
+            <div class="form-group">
+                <label for="breed">犬種</label>
+                <input type="text" id="breed" name="breed" required>
+            </div>
+
+            <!-- コメント入力 -->
+            <div class="form-group">
+                <label for="comment">コメント</label>
+                <textarea id="comment" name="comment" rows="5" required></textarea>
+            </div>
+
+            <!-- 保存ボタン & 投稿ボタン -->
+            <div class="form-actions">
+                <button type="submit" id="saveButton">保存</button>
+                <button type="button" id="postButton">投稿</button>
+            </div>
+        </form>
 
         <!-- 投稿一覧 -->
-        <div id="posts">
-            <?php foreach ($posts as $post): ?>
-                <div class="post">
-                    <p class="username"><?php echo htmlspecialchars($post['username']); ?></p>
-                    <p class="content"><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
-                    <p class="date"><?php echo $post['created_at']; ?></p>
-                </div>
-            <?php endforeach; ?>
+        <div class="posts">
+            <h2>投稿一覧</h2>
+            <div id="postList">
+                <?php foreach ($posts as $post): ?>
+                    <div class="post">
+                        <h3><?php echo htmlspecialchars($post['title']); ?></h3>
+                        <p><strong>犬種:</strong> <?php echo htmlspecialchars($post['breed']); ?></p>
+                        <p><?php echo nl2br(htmlspecialchars($post['comment'])); ?></p>
+                        <p class="date"><?php echo $post['created_at']; ?></p>
+                        <!-- 削除ボタン -->
+                        <form class="deleteform" method="post" action="delete.php">
+                            <input type="hidden" name="id" value="<?php echo $post['id']; ?>">
+                            <button type="submit">削除</button>
+                        </form>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
-
-        <!-- 投稿フォーム -->
-        <form method="post" action="post.php">
-            <input type="text" name="username" placeholder="名前" required>
-            <textarea name="content" rows="5" placeholder="内容を入力してください" required></textarea>
-            <button type="submit">投稿</button>
-        </form>
     </div>
+
 </body>
 </html>
