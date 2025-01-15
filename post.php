@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         file_put_contents('dog.html', $post, FILE_APPEND);
 
         // 保存後に元のページにリダイレクト
-        header('Location: index.html');
+        header('Location: dog.html');
         exit;
     } else {
         echo '全ての項目を埋めてください。';
